@@ -1,18 +1,26 @@
 import express from 'express';
+import winston from 'winston';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  ),
+  defaultMeta: { service: 'orbis-onboarding-service' },
+  transports: [new winston.transports.Console()],
+});
+
 app.use(express.json());
 
-// TODO ejercicio 03: reemplazar este console.log por un logger estructurado (Winston)
-// El logger debe emitir JSON con los campos: timestamp, level, message, service
 app.use((req, _res, next) => {
-  console.log(`${req.method} ${req.path}`);
+  logger.info(`${req.method} ${req.path}`);
   next();
 });
 
-// Rutas del servicio
 app.get('/products', (_req, res) => {
   res.json([
     { id: 1, name: 'Producto A', price: 100 },
@@ -27,12 +35,16 @@ app.get('/products/:id', (req, res) => {
   res.status(404).json({ error: 'Product not found' });
 });
 
-// TODO ejercicio 03: agregar los dos health check endpoints
-// GET /health/live  → 200 { status: 'ok' }
-// GET /health/ready → 200 { status: 'ok' } o 503 si el servicio no está listo
+app.get('/health/live', (_req, res) => {
+  res.json({ status: 'ok' });
+});
+
+app.get('/health/ready', (_req, res) => {
+  res.json({ status: 'ok' });
+});
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  logger.info(`Server running on port ${PORT}`);
 });
 
 export default app;
