@@ -6,12 +6,12 @@ No vas a leer documentación teórica — vas a aplicar cada estándar sobre un 
 
 ## Cómo funciona
 
-1. Creá tu rama: `git checkout -b onboarding/tu-nombre`
-2. Completá los ejercicios en orden
-3. Cada push activa el CI — él te dice si vas bien o qué falta
-4. Cuando terminás todo, abrís un PR a `main` — ese PR es tu evidencia de completado
+1. Crea tu rama: `git checkout -b onboarding/tu-nombre`
+2. Completa los ejercicios en orden
+3. Cada push activa el CI — él indica si vas bien o qué falta
+4. Cuando terminas todo, abres un PR a `main` — ese PR es tu evidencia de completado
 
-**El PR nunca se mergea.** `main` siempre tiene el esqueleto base limpio para el próximo dev.
+**El PR nunca se mergea.** `main` siempre tiene el esqueleto base limpio para el siguiente dev.
 
 ## Ejercicios
 
@@ -24,8 +24,8 @@ No vas a leer documentación teórica — vas a aplicar cada estándar sobre un 
 
 ## El servicio
 
-En `/service` vas a encontrar un servicio Express con partes incompletas a propósito.
-Tu trabajo es completarlo ejercicio por ejercicio hasta que el CI esté completamente verde.
+En `/service` se encuentra un servicio Express con partes incompletas a propósito.
+El trabajo es completarlo ejercicio por ejercicio hasta que el CI esté completamente verde.
 
 ## Referencias
 

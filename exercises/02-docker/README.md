@@ -28,7 +28,7 @@ curl http://localhost:3000/products  # debe retornar JSON
 
 ## Pistas
 
-- Usá multi-stage: un stage para `npm ci --omit=dev`, otro para la imagen final
+- Usar multi-stage: un stage para `npm ci --omit=dev`, otro para la imagen final
 - El usuario final debe ser `node`, no `root`
 - El `COPY` del código va con `--chown=node:node`
 - El `CMD` arranca con `node src/index.js`

@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Agregar logs estructurados y health checks al servicio. Sin esto, en producción no podés saber qué está pasando.
+Agregar logs estructurados y health checks al servicio. Sin esto, en producción no es posible saber qué está pasando.
 
 ## Tu tarea
 
