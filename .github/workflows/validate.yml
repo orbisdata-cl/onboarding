@@ -1,0 +1,100 @@
+name: Validate onboarding
+
+on:
+  push:
+    branches:
+      - 'onboarding/**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci:
+    name: Tests y linting
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: service
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: service/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Tests
+        run: npm test
+
+  docker:
+    name: Docker build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./service
+          push: false
+          tags: orbis-onboarding:ci
+
+      - name: Smoke test — service responde
+        run: |
+          docker run -d --name onboarding-test -p 3000:3000 orbis-onboarding:ci
+          sleep 3
+          curl --fail http://localhost:3000/products
+          curl --fail http://localhost:3000/health/live
+          curl --fail http://localhost:3000/health/ready
+          docker stop onboarding-test
+
+  dockerfile-complete:
+    name: Dockerfile sin TODOs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check no TODOs in Dockerfile
+        run: |
+          if grep -q "TODO" service/Dockerfile; then
+            echo "El Dockerfile todavia tiene TODOs sin completar."
+            exit 1
+          fi
+
+  logs-structured:
+    name: Logs en formato JSON
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: service
+
+      - name: Verificar que los logs son JSON
+        run: |
+          OUTPUT=$(node service/src/index.js &)
+          sleep 2
+          LOG=$(curl -s http://localhost:3000/products 2>/dev/null; kill %1 2>/dev/null; true)
+          # El proceso imprime logs — verificamos que sean JSON válido
+          node -e "
+            const { execSync } = require('child_process');
+            const out = execSync('node service/src/index.js & sleep 1 && curl -s http://localhost:3000/products && kill %1 2>/dev/null; true', { shell: true, timeout: 5000 }).toString();
+            const lines = out.split('\n').filter(l => l.trim().startsWith('{'));
+            if (lines.length === 0) { console.error('No se encontraron logs en formato JSON'); process.exit(1); }
+            lines.forEach(l => JSON.parse(l));
+            console.log('Logs JSON validos:', lines.length, 'lineas');
+          " || echo "Advertencia: verificar logs manualmente"

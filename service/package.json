@@ -1,0 +1,19 @@
+{
+  "name": "orbis-onboarding-service",
+  "version": "1.0.0",
+  "description": "Servicio de onboarding para nuevos developers de Orbis Data",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node --test src/**/*.test.js",
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "winston": "^3.13.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0"
+  }
+}
