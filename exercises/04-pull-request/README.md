@@ -6,9 +6,9 @@ Abrir el PR final que certifica que completaste el onboarding.
 
 ## Tu tarea
 
-1. Asegurate de que el CI esté completamente verde en tu rama
-2. Abrí un PR desde `onboarding/tu-nombre` → `main`
-3. Completá el checklist del PR (aparece automáticamente al abrir el PR)
+1. Verificar que el CI esté completamente verde en la rama
+2. Abrir un PR desde `onboarding/tu-nombre` → `main`
+3. Completar el checklist del PR (aparece automáticamente al abrir el PR)
 
 ## Criterio de éxito
 

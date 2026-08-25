@@ -15,7 +15,7 @@ Crear el archivo `.github/workflows/ci.yml` en la raíz del repo con un pipeline
 
 ## Criterio de éxito
 
-El CI corre automáticamente cuando hacés push y todos los pasos están en verde.
+El CI corre automáticamente cuando se hace push y todos los pasos están en verde.
 
 ## Referencia
 
@@ -44,5 +44,5 @@ jobs:
           node-version: lts/*
           cache: npm
           cache-dependency-path: service/package-lock.json
-      # completá los pasos que faltan
+      # completar los pasos que faltan
 ```
