@@ -1,12 +1,9 @@
-# syntax=docker/dockerfile:1
-
-FROM orbisdata/node-base:lts AS deps
-COPY package*.json ./
-RUN npm ci --omit=dev
-
-FROM orbisdata/node-base:lts AS runner
-COPY --from=deps /app/node_modules ./node_modules
-COPY --chown=node:node . .
-
-EXPOSE 3000
-CMD ["node", "src/index.js"]
+# TODO ejercicio 02: completar este Dockerfile usando la imagen base de Orbis Data
+#
+# INSTRUCCIONES en exercises/02-docker/README.md
+#
+# Pistas:
+# - La imagen correcta para Express es orbisdata/node-base:lts
+# - Necesitas dos stages: uno para instalar deps, otro para la imagen final
+# - El usuario debe ser node (no root)
+# - El puerto es 3000

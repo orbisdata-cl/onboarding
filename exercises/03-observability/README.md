@@ -2,38 +2,40 @@
 
 ## Objetivo
 
-Entender los estándares de observabilidad de Orbis Data y extender el servicio con un nuevo endpoint que los aplique correctamente.
+Agregar logs estructurados y health checks al servicio. Sin esto, en producción no es posible saber qué está pasando.
 
 ## Tu tarea
 
-El servicio ya tiene logs estructurados (Winston) y health checks. Tu trabajo es agregar un nuevo endpoint que siga los mismos patrones.
+### Parte A — Logs estructurados
 
-### Agregar `GET /products/search?name=X`
+Reemplazar los `console.log` en `service/src/index.js` por un logger Winston que emita JSON.
 
-El endpoint debe:
-1. Recibir un query param `name` y filtrar los productos por nombre (búsqueda parcial, case-insensitive)
-2. Emitir un log estructurado con el término buscado y la cantidad de resultados
-3. Retornar 400 si el param `name` no está presente
-
-Ejemplo:
+Cada log debe tener estos campos:
+```json
+{
+  "timestamp": "2026-08-25T12:00:00.000Z",
+  "level": "info",
+  "message": "GET /products",
+  "service": "orbis-onboarding-service"
+}
 ```
-GET /products/search?name=a
-→ 200 [{ "id": 1, "name": "Producto A", "price": 100 }]
 
-GET /products/search
-→ 400 { "error": "Missing required query param: name" }
+### Parte B — Health checks
+
+Agregar dos endpoints en `service/src/index.js`:
+
 ```
+GET /health/live   → 200 { "status": "ok" }
+GET /health/ready  → 200 { "status": "ok" }
+```
+
+Estos endpoints no llevan autenticación y no generan logs.
 
 ## Criterio de éxito
 
-Los tests nuevos pasan:
+Los tests ya existen y validan los health checks. Deben pasar:
 ```bash
 npm test
-```
-
-Los logs del nuevo endpoint salen en JSON con los campos correctos:
-```json
-{ "timestamp": "...", "level": "info", "message": "search", "term": "a", "results": 1, "service": "orbis-onboarding-service" }
 ```
 
 ## Referencia
