@@ -2,6 +2,7 @@
   "name": "orbis-onboarding-service",
   "version": "1.0.0",
   "description": "Servicio de onboarding para nuevos developers de Orbis Data",
+  "type": "module",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",

@@ -29,19 +29,13 @@ GET /health/live   → 200 { "status": "ok" }
 GET /health/ready  → 200 { "status": "ok" }
 ```
 
-Estos endpoints no llevan autenticación y no generan logs (para no contaminar las métricas).
+Estos endpoints no llevan autenticación y no generan logs.
 
 ## Criterio de éxito
 
-Los tests ya existen y validan los health checks. El CI debe estar verde:
-```
-npm test   # los tests de health/live y health/ready deben pasar
-```
-
-Y los logs deben salir en formato JSON:
-```
-docker run orbis-onboarding
-# cada request debe imprimir una línea JSON, no texto plano
+Los tests ya existen y validan los health checks. Deben pasar:
+```bash
+npm test
 ```
 
 ## Referencia

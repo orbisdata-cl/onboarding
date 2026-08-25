@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Configurar el pipeline de CI para el servicio. Cuando hagas push, el CI debe correr automáticamente y validar tu código.
+Configurar el pipeline de CI para el servicio. El servicio base ya existe y funciona — tu trabajo es hacer que el CI lo valide automáticamente en cada push.
 
 ## Tu tarea
 

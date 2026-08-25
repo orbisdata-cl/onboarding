@@ -5,14 +5,13 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// TODO ejercicio 03: reemplazar este console.log por un logger estructurado (Winston)
+// TODO ejercicio 03: reemplazar este console.log por un logger Winston
 // El logger debe emitir JSON con los campos: timestamp, level, message, service
 app.use((req, _res, next) => {
   console.log(`${req.method} ${req.path}`);
   next();
 });
 
-// Rutas del servicio
 app.get('/products', (_req, res) => {
   res.json([
     { id: 1, name: 'Producto A', price: 100 },
@@ -29,7 +28,7 @@ app.get('/products/:id', (req, res) => {
 
 // TODO ejercicio 03: agregar los dos health check endpoints
 // GET /health/live  → 200 { status: 'ok' }
-// GET /health/ready → 200 { status: 'ok' } o 503 si el servicio no está listo
+// GET /health/ready → 200 { status: 'ok' }
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

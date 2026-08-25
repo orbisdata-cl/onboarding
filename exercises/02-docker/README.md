@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Containerizar el servicio usando la imagen base de Orbis Data. Nada de escribir un Dockerfile desde cero.
+Containerizar el servicio usando la imagen base de Orbis Data. No escribir un Dockerfile desde cero.
 
 ## Tu tarea
 
@@ -10,13 +10,10 @@ Completar el archivo `service/Dockerfile` usando la imagen base correcta para un
 
 ## Criterio de éxito
 
-El CI puede buildear la imagen sin errores:
-```
-docker build -t orbis-onboarding ./service
-```
+El CI buildea la imagen y verifica que el servicio responde:
 
-Y el contenedor arranca y responde:
-```
+```bash
+docker build -t orbis-onboarding ./service
 docker run -p 3000:3000 orbis-onboarding
 curl http://localhost:3000/products  # debe retornar JSON
 ```
